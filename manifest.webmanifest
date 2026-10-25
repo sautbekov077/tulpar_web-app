@@ -8,5 +8,19 @@
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#10110f",
-  "theme_color": "#10110f"
+  "theme_color": "#10110f",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
 }

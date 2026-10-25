@@ -5,3 +5,5 @@
 @media(max-height:680px){.topbar{min-height:67px}.config-content{padding-top:18px}.material-image{height:78px}.section-heading h2{font-size:25px}.top-layer-heading{margin-top:22px}.result-intro h2{font-size:29px}.result-content{padding-top:13px}.result-actions{padding-top:8px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;scroll-behavior:auto!important}}
 .image-fallback[hidden]{display:none}
+.brand-mark{width:112px;height:112px;overflow:hidden;background:radial-gradient(circle at 35% 25%,rgba(197,169,120,.12),transparent 70%),#191a17;box-shadow:0 0 0 7px rgba(197,169,120,.035),0 12px 36px rgba(0,0,0,.25)}
+.brand-mark img{display:block;width:100%;height:100%;object-fit:contain;padding:12px}
