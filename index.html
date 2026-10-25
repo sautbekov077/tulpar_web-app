@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#10110f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Tulpar Service">
+  <meta name="description" content="Подберите автомобильные коврики Tulpar Service">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
+  <title>Tulpar Service — Полики</title>
+</head>
+<body>
+  <main class="app-shell">
+    <section class="screen home-screen active" id="homeScreen" aria-label="Главное меню">
+      <div class="home-content">
+        <div class="brand-mark" aria-hidden="true"><span>T</span></div>
+        <p class="eyebrow">АВТОАТЕЛЬЕ · С 2014</p>
+        <h1>Tulpar <span>Service</span></h1>
+        <p class="home-caption">Индивидуальный подход<br>к деталям вашего автомобиля</p>
+      </div>
+      <button class="primary-button home-cta" id="openConfigurator">Полики <span aria-hidden="true">↗</span></button>
+      <p class="home-footnote">КАЧЕСТВО, КОТОРОЕ ЧУВСТВУЕТСЯ</p>
+    </section>
+
+    <section class="screen configurator-screen" id="configuratorScreen" aria-label="Конфигуратор">
+      <header class="topbar">
+        <button class="icon-button" id="backHome" aria-label="На главную">←</button>
+        <div class="topbar-title"><span class="eyebrow">ВАША КОМПЛЕКТАЦИЯ</span><strong>Полики</strong></div>
+        <span class="step-count">01 <i>/</i> 02</span>
+      </header>
+      <div class="config-content">
+        <div class="section-heading">
+          <span class="step-label">ШАГ 01</span>
+          <h2>Выберите основу</h2>
+          <p>Материал нижнего слоя</p>
+        </div>
+        <div class="material-grid" id="baseMaterials" aria-label="Материалы основы"></div>
+        <div class="section-heading top-layer-heading">
+          <span class="step-label">ШАГ 02</span>
+          <h2>Верхний коврик</h2>
+          <p>Выберите фактуру и цвет</p>
+        </div>
+        <div id="topMaterials" class="top-materials"></div>
+      </div>
+      <div class="bottom-action"><button class="primary-button" id="showResult" disabled>Показать результат <span aria-hidden="true">→</span></button></div>
+    </section>
+
+    <section class="screen result-screen" id="resultScreen" aria-label="Результат">
+      <header class="topbar result-topbar">
+        <button class="icon-button" id="editParameters" aria-label="Изменить параметры">←</button>
+        <div class="topbar-title"><span class="eyebrow">ВАШ ВЫБОР</span><strong>Готовый образ</strong></div>
+        <span class="result-index">01</span>
+      </header>
+      <div class="result-content">
+        <div class="result-intro"><span class="step-label">TULPAR SERVICE</span><h2>Создано<br><em>для вас.</em></h2></div>
+        <figure class="result-frame">
+          <img id="resultImage" src="" alt="Вариант автомобильного коврика">
+          <div class="image-fallback" id="imageFallback"><span>TS</span><p>Визуализация комплектации</p><small>Фото появится после добавления файла результата</small></div>
+          <figcaption id="resultCaption"></figcaption>
+        </figure>
+      </div>
+      <div class="result-actions"><button class="secondary-button" id="editParametersBottom">Изменить параметры <span aria-hidden="true">↗</span></button><p>СОБРАНО С УЧЁТОМ ВАШИХ ПОЖЕЛАНИЙ</p></div>
+    </section>
+  </main>
+  <script src="app.js" defer></script>
+</body>
+</html>
