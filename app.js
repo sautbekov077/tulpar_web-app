@@ -6,7 +6,9 @@ const catalog = {
     { id: "m1", name: "Материал 1", texture: "assets/materials/m1.jpg" },
     { id: "m2", name: "Материал 2", texture: "assets/materials/m2.jpg" },
     { id: "m3", name: "Материал 3", texture: "assets/materials/m3.jpg" },
-    { id: "m4", name: "Материал 4", texture: "assets/materials/m4.jpg" }
+    { id: "m4", name: "Материал 4", texture: "assets/materials/m4.jpg" },
+    { id: "m5", name: "Материал 5", texture: "assets/materials/m5.jpg" },
+    { id: "m6", name: "Материал 6", texture: "assets/materials/m6.jpg" }
   ],
   topCategories: [
     { id: "eva", name: "EVA", colors: [{ id: "eva_black", name: "Черный", icon: "assets/layers/eva_black.jpg" }] },

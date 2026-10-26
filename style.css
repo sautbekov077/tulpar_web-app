@@ -7,3 +7,10 @@
 .image-fallback[hidden]{display:none}
 .brand-mark{width:112px;height:112px;overflow:hidden;background:radial-gradient(circle at 35% 25%,rgba(197,169,120,.12),transparent 70%),#191a17;box-shadow:0 0 0 7px rgba(197,169,120,.035),0 12px 36px rgba(0,0,0,.25)}
 .brand-mark img{display:block;width:100%;height:100%;object-fit:contain;padding:12px}
+.material-grid{display:grid;grid-auto-flow:column;grid-template-rows:repeat(2,auto);grid-auto-columns:minmax(132px,39vw);grid-template-columns:none;gap:10px;overflow-x:auto;overflow-y:hidden;padding:2px 2px 9px;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.material-grid::-webkit-scrollbar{display:none}
+.material-card{width:100%;scroll-snap-align:start}
+.material-card{aspect-ratio:3/4;display:flex;flex-direction:column}
+.material-image{height:auto;flex:1;min-height:0}
+.material-name{flex-shrink:0}
+@media(min-width:500px){.material-grid{grid-auto-columns:160px}}
