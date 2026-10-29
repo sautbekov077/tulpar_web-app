@@ -2,26 +2,73 @@
 
 // Каталог материалов. Пути можно заменить на реальные фотографии без изменений логики.
 const catalog = {
-  baseMaterials: [
-    { id: "m1", name: "Материал 1", texture: "assets/materials/m1.jpg" },
-    { id: "m2", name: "Материал 2", texture: "assets/materials/m2.jpg" },
-    { id: "m3", name: "Материал 3", texture: "assets/materials/m3.jpg" },
-    { id: "m4", name: "Материал 4", texture: "assets/materials/m4.jpg" },
-    { id: "m5", name: "Материал 5", texture: "assets/materials/m5.jpg" },
-    { id: "m6", name: "Материал 6", texture: "assets/materials/m6.jpg" }
+  baseCategories: [
+    {
+      id: "standard",
+      name: "Обычные материалы",
+      materials: [
+        { id: "m1", name: "Материал 1", texture: "assets/materials/m1.jpg" },
+        { id: "m2", name: "Материал 2", texture: "assets/materials/m2.jpg" },
+        { id: "m3", name: "Материал 3", texture: "assets/materials/m3.jpg" },
+        { id: "m4", name: "Материал 4", texture: "assets/materials/m4.jpg" },
+        { id: "m5", name: "Материал 5", texture: "assets/materials/m5.jpg" },
+        { id: "m6", name: "Материал 6", texture: "assets/materials/m6.jpg" },
+        { id: "m7", name: "Материал 7", texture: "assets/materials/m7.jpg" },
+        { id: "m8", name: "Материал 8", texture: "assets/materials/m8.jpg" }
+        
+      ]
+    },
+    {
+      id: "crocodile",
+      name: "Крокодил",
+      materialFilePattern: "mc{n}.jpg",
+      resultIdPattern: "mc{n}",
+      count: 2,
+      materials: [
+      ]
+    },
+    {
+      id: "360",
+      name: "360 полик",
+      materialFilePattern: "m360_{n}.jpg",
+      resultIdPattern: "m360_{n}",
+      count: 0,
+      materials: []
+    }
   ],
   topCategories: [
     { id: "eva", name: "EVA", colors: [{ id: "eva_black", name: "Черный", icon: "assets/layers/eva_black.jpg" }] },
-    { id: "fishing-line", name: "Леска", colors: [] },
+    { id: "fishing-line", name: "Леска", colors: [ {id: "leska_black", name: "Черный", icon: "assets/layers/leska_black.jpg"}] },
     { id: "sponge", name: "Губка", colors: [] }
   ]
 };
 
 const selection = { baseId: null, topId: null };
-const screens = [...document.querySelectorAll(".screen")];
+let activeBaseCategoryId = catalog.baseCategories[0].id;
+const materialTabs = document.getElementById("materialTabs");
 const baseContainer = document.getElementById("baseMaterials");
 const topContainer = document.getElementById("topMaterials");
 const resultButton = document.getElementById("showResult");
+
+// Генерирует список по шаблону категории. Укажите count, когда будут готовы файлы.
+function generateCategoryMaterials(category) {
+  return Array.from({ length: category.count ?? 0 }, (_, index) => {
+    const number = index + 1;
+    const materialId = category.resultIdPattern.replace("{n}", number);
+    const textureFile = category.materialFilePattern.replace("{n}", number);
+    return {
+      id: materialId,
+      name: `${category.name} ${number}`,
+      texture: `assets/materials/${textureFile}`
+    };
+  });
+}
+
+catalog.baseCategories.forEach((category) => {
+  if (category.materialFilePattern && category.resultIdPattern) {
+    category.materials = generateCategoryMaterials(category);
+  }
+});
 
 function showScreen(id) {
   const current = document.querySelector(".screen.active");
@@ -34,11 +81,23 @@ function showScreen(id) {
 }
 
 function renderBaseMaterials() {
-  baseContainer.innerHTML = catalog.baseMaterials.map((item) => `
+  const category = catalog.baseCategories.find((item) => item.id === activeBaseCategoryId);
+  materialTabs.innerHTML = catalog.baseCategories.map((item) => `
+    <button class="material-tab${item.id === activeBaseCategoryId ? " active" : ""}" type="button" data-category-id="${item.id}" aria-pressed="${item.id === activeBaseCategoryId}">${item.name}</button>`).join("");
+
+  if (!category?.materials.length) {
+    baseContainer.classList.add("is-empty");
+    baseContainer.innerHTML = `<div class="materials-empty">Материалы этого раздела скоро появятся</div>`;
+    return;
+  }
+
+  baseContainer.classList.remove("is-empty");
+  baseContainer.innerHTML = category.materials.map((item) => `
     <button class="material-card" type="button" data-base-id="${item.id}" aria-pressed="false">
       <span class="material-image"><img src="${item.texture}" alt="" loading="lazy"><span class="material-number">${item.id.toUpperCase()}</span></span>
       <span class="material-name">${item.name}</span><span class="selection-check" aria-hidden="true">✓</span>
     </button>`).join("");
+  updateSelection();
 }
 
 function renderTopMaterials() {
@@ -67,9 +126,14 @@ function updateSelection() {
 }
 
 function getSelectedNames() {
-  const base = catalog.baseMaterials.find((item) => item.id === selection.baseId);
+  const base = catalog.baseCategories.flatMap((category) => category.materials).find((item) => item.id === selection.baseId);
   const top = catalog.topCategories.flatMap((category) => category.colors).find((color) => color.id === selection.topId);
   return { base: base?.name ?? "Основа", top: top?.name ?? "Верхний слой" };
+}
+
+function getResultImagePath() {
+  // Например: mc1 + eva_black -> assets/results/mc1_eva_black.jpg
+  return `assets/results/${selection.baseId}_${selection.topId}.jpg`;
 }
 
 function showResult() {
@@ -82,7 +146,7 @@ function showResult() {
   fallback.hidden = false;
   image.onload = () => { image.classList.add("loaded"); fallback.hidden = true; };
   image.onerror = () => { image.classList.remove("loaded"); fallback.hidden = false; };
-  image.src = `assets/results/${selection.baseId}_${selection.topId}.jpg`;
+  image.src = getResultImagePath();
   image.alt = `${names.base}, верхний коврик: ${names.top}`;
   caption.textContent = `${names.base.toUpperCase()}  ·  ${names.top.toUpperCase()}`;
   showScreen("resultScreen");
@@ -93,6 +157,12 @@ document.getElementById("backHome").addEventListener("click", () => showScreen("
 document.getElementById("editParameters").addEventListener("click", () => showScreen("configuratorScreen"));
 document.getElementById("editParametersBottom").addEventListener("click", () => showScreen("configuratorScreen"));
 resultButton.addEventListener("click", showResult);
+materialTabs.addEventListener("click", (event) => {
+  const tab = event.target.closest("[data-category-id]");
+  if (!tab || tab.dataset.categoryId === activeBaseCategoryId) return;
+  activeBaseCategoryId = tab.dataset.categoryId;
+  renderBaseMaterials();
+});
 baseContainer.addEventListener("click", (event) => {
   const card = event.target.closest("[data-base-id]");
   if (!card) return;

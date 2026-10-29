@@ -13,4 +13,10 @@
 .material-card{aspect-ratio:3/4;display:flex;flex-direction:column}
 .material-image{height:auto;flex:1;min-height:0}
 .material-name{flex-shrink:0}
+.material-tabs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin:0 -21px 23px;padding:2px 21px 5px;scroll-snap-type:x proximity}
+.material-tabs::-webkit-scrollbar{display:none}
+.material-tab{flex:0 0 auto;min-height:37px;padding:0 13px;border:1px solid var(--line);border-radius:999px;background:var(--panel);color:#999a92;font-size:10px;font-weight:600;white-space:nowrap;scroll-snap-align:start;transition:background .2s,border-color .2s,color .2s}
+.material-tab.active{background:rgba(197,169,120,.13);border-color:var(--accent);color:var(--accent)}
+.materials-empty{grid-column:1/-1;min-height:130px;display:grid;place-items:center;padding:20px;border:1px dashed rgba(255,255,255,.13);border-radius:12px;color:var(--muted);font-size:11px;text-align:center}
+.material-grid.is-empty{display:block;overflow:visible;padding:0}
 @media(min-width:500px){.material-grid{grid-auto-columns:160px}}
